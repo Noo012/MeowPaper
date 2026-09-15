@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Wallpaper</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo/gemini-svg.svg" alt="MeowPaper Logo" class="logo-img">
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-item">Gallery</a>
+            <a href="#" class="nav-item">About</a>
+            <a href="#" class="nav-item">Contact</a>
+        </div>
+    </nav>
+
+    <div class="download-page-container">
+        <div class="download-card">
+            <div class="preview-box">
+                <img id="wallpaper-preview" src="" alt="Wallpaper Preview">
+            </div>
+            
+            <div class="details-box">
+                <h2>HD Wallpaper Download</h2>
+                <p class="img-meta">Original Resolution: <span id="img-res">Loading...</span></p>
+                
+                <div class="action-buttons">
+                    <button id="main-download-btn" class="dl-btn primary-dl">
+                        <span>⬇️</span> Download Original Wallpaper
+                    </button>
+                </div>
+
+                <div class="resize-panel">
+                    <h3>Resize & Download Custom Size:</h3>
+                    <div class="resize-inputs">
+                        <input type="number" id="width-input" placeholder="Width">
+                        <span>x</span>
+                        <input type="number" id="height-input" placeholder="Height">
+                        <button id="resize-btn" class="dl-btn small-dl">Resize & Download</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const imageSrc = urlParams.get('img');
+            
+            if (imageSrc) {
+                const decodedSrc = decodeURIComponent(imageSrc);
+                const previewImg = document.getElementById('wallpaper-preview');
+                const downloadBtn = document.getElementById('main-download-btn');
+                const resSpan = document.getElementById('img-res');
+                const widthInput = document.getElementById('width-input');
+                const heightInput = document.getElementById('height-input');
+                const resizeBtn = document.getElementById('resize-btn');
+
+                previewImg.src = decodedSrc;
+
+                const tempImg = new Image();
+                tempImg.src = decodedSrc;
+
+                tempImg.onload = () => {
+                    const originalWidth = tempImg.naturalWidth;
+                    const originalHeight = tempImg.naturalHeight;
+
+                    resSpan.innerText = `${originalWidth} x ${originalHeight} px`;
+                    widthInput.value = originalWidth;
+                    heightInput.value = originalHeight;
+                };
+
+                function downloadViaCanvas(imgObj, width, height, fileName) {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(imgObj, 0, 0, width, height);
+
+                    const dataUrl = canvas.toDataURL('image/png');
+                    const a = document.createElement('a');
+                    a.href = dataUrl;
+                    a.download = fileName;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+
+                downloadBtn.addEventListener('click', () => {
+                    const fileName = decodedSrc.split('/').pop() || 'wallpaper.png';
+                    
+                    fetch(decodedSrc)
+                        .then(res => res.blob())
+                        .then(blob => {
+                            const blobUrl = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = blobUrl;
+                            a.download = fileName;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(blobUrl);
+                        })
+                        .catch(() => {
+                            downloadViaCanvas(tempImg, tempImg.naturalWidth, tempImg.naturalHeight, fileName);
+                        });
+                });
+
+                resizeBtn.addEventListener('click', () => {
+                    const newWidth = parseInt(widthInput.value);
+                    const newHeight = parseInt(heightInput.value);
+
+                    if (!newWidth || !newHeight) return;
+
+                    const fileName = `resized-${newWidth}x${newHeight}-${decodedSrc.split('/').pop() || 'wallpaper.png'}`;
+                    downloadViaCanvas(tempImg, newWidth, newHeight, fileName);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

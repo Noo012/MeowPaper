@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallpaper Collection</title>
+    <link rel="stylesheet" href="styles.css">
+</head> 
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo/gemini-svg.svg" alt="MeowPaper Logo" class="logo-img">
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-item">Contact Me</a>
+            <a href="#" class="nav-item">About</a>
+            <a href="#" class="nav-item">Gallery</a>
+        </div>
+    </nav>
+
+    <div class="content">
+        <h3>Wallpaper Collection</h3>
+        <div class="gallery-grid">
+            <div class="img-wrapper">
+                <img src="imgs/wallhaven-1plzyv.jpg" alt="Wallpaper 1">
+                <div class="custom-tooltip">Click to go to the download page<br>double-click to preview</div>
+            </div>
+            <div class="img-wrapper">
+                <img src="imgs/wallhaven-4gmloe.jpg" alt="Wallpaper 2">
+                <div class="custom-tooltip">Click to go to the download page<br>double-click to preview</div>
+            </div>
+            <div class="img-wrapper">
+                <img src="imgs/wallhaven-gp86e3.jpg" alt="Wallpaper 3">
+                <div class="custom-tooltip">Click to go to the download page<br>double-click to preview</div>
+            </div>
+            <div class="img-wrapper">
+                <img src="imgs/wallhaven-je5r8y.png" alt="Wallpaper 4">
+                <div class="custom-tooltip">Click to go to the download page<br>double-click to preview</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="desktop-modal" class="desktop-modal">
+        <button id="close-btn" class="top-close-btn" title="Close">✕</button>
+
+        <div id="desktop-screen" class="desktop-screen">
+            <div class="desktop-icons">
+                <div class="desktop-icon" id="my-system-icon">
+                    <span class="icon-img">💻</span>
+                    <span class="icon-label">My system</span>
+                </div>
+                <div class="desktop-icon" id="wallpapers-icon">
+                    <span class="icon-img">🖼️</span>
+                    <span class="icon-label">Wallpapers</span>
+                </div>
+            </div>
+
+            <div id="system-info-modal" class="system-info-modal" style="display: none;">
+                <div class="system-info-card">
+                    <button id="close-sys-info" class="top-close-btn">✕</button>
+                    <h3>System & Wallpaper Info</h3>
+                    <hr class="cyber-divider">
+                    <div class="info-details">
+                        <p><strong>Name:</strong> <span id="info-name">--</span></p>
+                        <p><strong>Format:</strong> <span id="info-format">--</span></p>
+                        <p><strong>Resolution:</strong> <span id="info-res">Loading...</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="gallery-app-modal" class="app-window" style="display: none;">
+                <div class="window-header">
+                    <span class="window-title">🖼️ Wallpapers Gallery</span>
+                    <button id="close-gallery-app" class="window-close-btn">✕</button>
+                </div>
+                <div class="iframe-container">
+                    <iframe id="wallpaper-iframe" src="about:blank"></iframe>
+                </div>
+            </div>
+
+            <div id="start-menu" class="start-menu">
+                <div class="start-menu-header">Select Wallpaper</div>
+                <div class="start-menu-grid">
+                    <img src="imgs/wallhaven-1plzyv.jpg" alt="Option 1">
+                    <img src="imgs/wallhaven-4gmloe.jpg" alt="Option 2">
+                    <img src="imgs/wallhaven-gp86e3.jpg" alt="Option 3">
+                    <img src="imgs/wallhaven-je5r8y.png" alt="Option 4">
+                </div>
+            </div>
+        </div>
+
+        <div class="taskbar">
+            <button id="start-btn" class="start-btn">
+                <span class="start-icon">🖼️</span> Wallpaper Viewer
+            </button>
+            <div class="active-apps"></div>
+            <div class="system-tray">
+                <span class="tray-icon">🔊</span>
+                <span class="tray-icon">📡</span>
+                <span id="real-time-clock">12:00 PM</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
